@@ -26,7 +26,11 @@ export default function NotesPage() {
         <h1 className="text-3xl font-bold">
           <Link to=".">Feed</Link>
         </h1>
-        <p>{user.email}</p>
+        <p>
+          <NavLink to={`/profile/${user.username}`}>
+            {user.email} | {user.username}
+          </NavLink>
+        </p>
         <Form action="/logout" method="post">
           <button
             type="submit"
@@ -52,12 +56,14 @@ export default function NotesPage() {
               {data.postListItems.map((post) => (
                 <li key={post.id}>
                   <NavLink
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={post.id}
+                    className="block border-b p-4 text-xl"
+                    to={`/posts/${post.id}`}
                   >
                     {post.body}
+                  </NavLink>
+                  Posted by:{" "}
+                  <NavLink to={`/profile/${post.user.username}`}>
+                    {post.user.username}
                   </NavLink>
                 </li>
               ))}
